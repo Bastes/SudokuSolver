@@ -8,10 +8,10 @@ begin
     gem.summary = %Q{TODO: one-line summary of your gem}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "michel.belleville@saas4.com"
-    gem.homepage = "http://github.com/Bastes/sudoku_solver"
+    gem.homepage = "http://github.com/Bastes/SudokuSolver"
     gem.authors = ["Michel Belleville"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_dependency "cellular_map", ">= 0.3.2"
+    gem.add_development_dependency "shoulda", ">= 0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
