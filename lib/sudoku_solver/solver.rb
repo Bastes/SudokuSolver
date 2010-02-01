@@ -13,16 +13,17 @@ module SudokuSolver
         c.content = v ? [v] : (1..width).to_a
       }
       self.reduce(grid, width, dimension, possibilities, size).
-        to_a.collect { |l| l.collect { |c| c.content.first } }
+        to_a.collect { |l| l.collect { |c| c.content.length == 1 ? c.content.first : nil } }
     end
 
     protected
 
     def self.reduce(grid, width, dimension, possibilities, size)
-      grid.each { |c|
-        unless c.content.length == 1
-          sx = c.x / dimension
-          sy = c.y / dimension
+      unsolved = grid.reject { |c| c.content.length == 1 }
+      until unsolved.empty? do
+        changed = unsolved.reject { |c|
+          sx = c.x - c.x % dimension
+          sy = c.y - c.y % dimension
           neighbouring_values = [
             grid[size, c.y],
             grid[c.x, size],
@@ -30,10 +31,13 @@ module SudokuSolver
               inject([]) { |r, z| r + z.collect { |d|
                 (d == c) ? nil : d.content } }.compact.uniq
           taken = neighbouring_values.reject { |r| r.length > 1 }.flatten
-          remaining = c.content - taken
-          c.content = remaining
-        end
-      }
+          remaining = (c.content - taken).sort
+          (c.content == remaining) || ! (c.content = remaining)
+        }
+        break unless changed.length > 0
+        unsolved.reject! { |c| c.content.length == 1 }
+      end
+      grid
     end
   end
 end
