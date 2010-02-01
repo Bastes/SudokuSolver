@@ -10,7 +10,7 @@ begin
     gem.email = "michel.belleville@saas4.com"
     gem.homepage = "http://github.com/Bastes/SudokuSolver"
     gem.authors = ["Michel Belleville"]
-    gem.add_dependency "cellular_map", ">= 0.3.2"
+    gem.add_dependency "cellular_map", ">= 0.4.0"
     gem.add_development_dependency "shoulda", ">= 0"
   end
   Jeweler::GemcutterTasks.new
@@ -50,4 +50,10 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "sudoku_solver #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+desc 'Start an IRB session with all necessary files required.'
+task :shell do |t|
+  chdir File.dirname(__FILE__)
+  exec 'irb -I lib/ -I lib/sudoku_solver -r solver'
 end
