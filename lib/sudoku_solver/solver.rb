@@ -22,8 +22,12 @@ module SudokuSolver
     end
 
     def solve
-      self.reduce(self.grid).to_a.collect { |l| l.collect { |c|
+      self.step(self.grid).to_a.collect { |l| l.collect { |c|
         c.content.length == 1 ? c.content.first : nil } }
+    end
+
+    def step(grid)
+      grid = self.reduce(grid)
     end
 
     def reduce(grid)

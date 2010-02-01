@@ -47,5 +47,21 @@ class TestSolver < Test::Unit::TestCase
         assert_equal @solution, solved
       }
     }
+    context('complex') {
+      setup {
+        @problem[0][2] = nil
+        @problem[2][2] = nil
+        @problem[0][3] = nil
+        @problem[3][2] = nil
+        @problem[3][1] = nil
+        @problem[2][3] = nil
+        @problem[2][0] = nil
+        @problem[2][3] = nil
+      }
+      should('still be easy to solve') {
+        solved = SudokuSolver::Solver.solve(@problem)
+        assert_equal @solution, solved
+      }
+    }
   }
 end
