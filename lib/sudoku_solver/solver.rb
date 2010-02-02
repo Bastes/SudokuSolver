@@ -41,18 +41,21 @@ module SudokuSolver
     end
 
     def restrict(cell)
+      taken = neighbours_values(cell).reject { |r| r.length > 1 }.flatten
+      remaining = (cell.content - taken).sort
+      (cell.content == remaining) || ! (cell.content = remaining)
+    end
+
+    def neighbours_values(cell)
       grid = cell.map
       sx = cell.x - cell.x % @dimension
       sy = cell.y - cell.y % @dimension
-      neighbouring_values = [
-        grid[@size, cell.y],
-        grid[cell.x, @size],
-        grid[sx..(sx + @dimension - 1), sy..(sy + @dimension - 1)] ].
+      neighbours_values = [
+        cell.map[@size, cell.y],
+        cell.map[cell.x, @size],
+        cell.map[sx..(sx + @dimension - 1), sy..(sy + @dimension - 1)] ].
           inject([]) { |r, z| r + z.collect { |d|
             (d == cell) ? nil : d.content } }.compact.uniq
-      taken = neighbouring_values.reject { |r| r.length > 1 }.flatten
-      remaining = (cell.content - taken).sort
-      (cell.content == remaining) || ! (cell.content = remaining)
     end
   end
 end
