@@ -1,4 +1,4 @@
-require 'cellular_map'
+require 'sudoku_solver/grid'
 
 module SudokuSolver
   class Solver
