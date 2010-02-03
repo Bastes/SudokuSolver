@@ -34,5 +34,15 @@ module SudokuSolver
       end
       cell
     end
+
+    protected
+
+    def initialize_copy(other) # :nodoc:
+      @map = other.map.dup
+      @map.each { |c|
+        c.content = c.content.dup rescue nil
+        c.content = nil unless x === c.x && y === c.y
+      }
+    end
   end
 end

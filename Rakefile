@@ -10,7 +10,7 @@ begin
     gem.email = "michel.belleville@saas4.com"
     gem.homepage = "http://github.com/Bastes/SudokuSolver"
     gem.authors = ["Michel Belleville"]
-    gem.add_dependency "cellular_map", ">= 0.4.0"
+    gem.add_dependency "cellular_map", ">= 0.6.0"
     gem.add_development_dependency "shoulda", ">= 0"
   end
   Jeweler::GemcutterTasks.new

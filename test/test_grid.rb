@@ -25,7 +25,6 @@ class TestGrid < Test::Unit::TestCase
     context('considering one of its cells') {
       setup {
         @cell = @grid[2, 5]
-        @sort_order = lambda { |a, b| 2 * (a[0] <=> b[0]) + (a[1] <=> b[1]) }
       }
       should('find the neighbours') {
         expected, obtained = [
@@ -52,9 +51,27 @@ class TestGrid < Test::Unit::TestCase
             @grid[1, 4]
           ],
           @cell.neighbours
-        ].collect { |a|
-          a.collect { |c| [c.x, c.y, c.content] }.sort &@sort_order }
+        ].collect { |a| a.sort }
         assert_equal expected, obtained
+      }
+    }
+
+    context('cloned') {
+      setup {
+        @grid[4, 4] = [1,2,3]
+        @clone = @grid.dup
+      }
+      should("be equal") { assert_equal @grid, @clone }
+      should("not be the same object") { assert_not_same @grid, @clone }
+      should("evolve their own separate way") {
+        @grid[1, 2] = [1, 2, 3]
+        @clone[1, 2] = [5, 6, 7]
+        @clone[4, 4].content.reject! { |v| v == 3 }
+        assert_equal [1, 2, 3], @grid[1, 2].content
+        assert_equal [1, 2, 3], @grid[4, 4].content
+        assert_equal [5, 6, 7], @clone[1, 2].content
+        assert_equal [1, 2], @clone[4, 4].content
+        assert_not_equal @grid, @clone
       }
     }
   }
