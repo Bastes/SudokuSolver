@@ -89,5 +89,20 @@ class TestGrid < Test::Unit::TestCase
       assert_equal (0..15), @grid.size
       assert_equal (1..16), @grid.possibilities
     }
+    should('know it\'s not solved already') {
+      assert !@grid.solved? }
+  }
+
+  context('A 2x2 grid, solved') {
+    setup {
+      @grid = SudokuSolver::Grid.new(2)
+      problem = [ [ 1, 2, 3, 4 ],
+                  [ 3, 4, 1, 2 ],
+                  [ 2, 1, 4, 3 ],
+                  [ 4, 3, 2, 1 ] ]
+      @grid.each { |c| c.content = [problem[c.x][c.y]] }
+    }
+    should('know it\'s solved already') {
+      assert @grid.solved? }
   }
 end

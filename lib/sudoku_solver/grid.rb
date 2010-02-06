@@ -45,6 +45,10 @@ module SudokuSolver
       }
     end
 
+    def solved?
+      ! self.detect { |c| c.content.nil? || c.content.length != 1 }
+    end
+
     protected
 
     def initialize_copy(other) # :nodoc:
