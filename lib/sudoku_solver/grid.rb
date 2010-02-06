@@ -35,6 +35,16 @@ module SudokuSolver
       cell
     end
 
+    def each # :nodoc:
+      super { |cell|
+        if cell.is_a? CellularMap::Cell
+          cell.extend Cell
+          cell.grid = self
+        end
+        yield cell
+      }
+    end
+
     protected
 
     def initialize_copy(other) # :nodoc:

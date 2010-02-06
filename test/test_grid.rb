@@ -24,10 +24,12 @@ class TestGrid < Test::Unit::TestCase
 
     context('considering one of its cells') {
       setup {
-        @cell = @grid[2, 5]
+        @cell1 = @grid[2, 5]
+        @cell2 = @grid.detect { |c|
+          [c.x, c.y] == [2, 5] }
       }
       should('find the neighbours') {
-        expected, obtained = [
+        expected, obtained1, obtained2 = [
           [
             @grid[0, 5],
             @grid[1, 5],
@@ -50,9 +52,11 @@ class TestGrid < Test::Unit::TestCase
             @grid[0, 4],
             @grid[1, 4]
           ],
-          @cell.neighbours
+          @cell1.neighbours,
+          @cell2.neighbours
         ].collect { |a| a.sort }
-        assert_equal expected, obtained
+        assert_equal expected, obtained1
+        assert_equal expected, obtained2
       }
     }
 
