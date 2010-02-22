@@ -1,6 +1,9 @@
 require 'sudoku_solver/grid'
 
 module SudokuSolver
+  class InvalidProblemError < Exception
+  end
+
   class Solver
     def self.solve(problem)
       self.new(problem).solve
@@ -28,6 +31,15 @@ module SudokuSolver
 
     def step(grid)
       grid = self.reduce(grid)
+      unless grid.solved?
+        cell = grid.detect { |c| c.content.length > 1 }
+        cell.content.detect { |value|
+          new_grid = grid.dup
+          new_grid[cell.x, cell.y] = [value]
+          step(new_grid)
+        }
+      end
+      grid
     end
 
     def reduce(grid)
