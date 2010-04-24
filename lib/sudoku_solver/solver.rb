@@ -68,6 +68,9 @@ module SudokuSolver
       taken = cell.neighbours.collect { |c| c.content }.
         reject { |r| r.length > 1 }.flatten
       remaining = (cell.content - taken).sort
+      if remaining.length == 0
+        raise InvalidProblemError.new(@problem)
+      end
       (cell.content == remaining) || ! (cell.content = remaining)
     end
   end
