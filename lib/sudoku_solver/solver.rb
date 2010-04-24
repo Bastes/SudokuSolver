@@ -2,6 +2,10 @@ require 'sudoku_solver/grid'
 
 module SudokuSolver
   class InvalidProblemError < Exception
+    attr_reader :problem
+    def initialize(problem)
+      @problem = problem
+    end
   end
 
   class Solver
@@ -22,6 +26,8 @@ module SudokuSolver
       @dimension = Math.sqrt(@width).to_i
       @size = (0..(@width -1))
       @possibilities = (1..@width)
+    rescue
+      raise InvalidProblemError.new(problem)
     end
 
     def solve
