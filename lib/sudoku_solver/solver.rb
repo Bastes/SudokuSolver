@@ -26,6 +26,9 @@ module SudokuSolver
     def initialize(problem)
       @problem = problem
       @width = @problem.length
+      if problem.any? { |l| l.length != @width }
+        raise InvalidProblemError.new(problem)
+      end
       @dimension = Math.sqrt(@width).to_i
       @size = (0..(@width -1))
       @possibilities = (1..@width)
