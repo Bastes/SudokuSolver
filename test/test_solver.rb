@@ -1,27 +1,22 @@
 require 'helper'
 
 class TestSolver < Test::Unit::TestCase
-  context('Absurde problems') {
-    setup {
-      @problems = [
-        :blah,
-        "truc",
-        1234,
-        [ [2] ],
-        [ [1], [2] ],
-        [ [1, nil, nil, nil],
-          [1, nil, nil, nil],
-          [nil, nil, nil, nil],
-          [nil, nil, nil, nil] ]
-      ]
-    }
-    should('be impossible to solve') {
-      @problems.each { |problem|
+  [ :blah,
+    "truc",
+    1234,
+    [ [2] ],
+    [ [1], [2] ],
+    [ [1, nil, nil, nil],
+      [1, nil, nil, nil],
+      [nil, nil, nil, nil],
+      [nil, nil, nil, nil] ] ].each { |problem|
+    context("This absurd problem #{problem.inspect}") {
+      should('be impossible to solve') {
         assert_raise(SudokuSolver::InvalidProblemError) {
           SudokuSolver::Solver.solve(problem) }
       }
     }
-  }
+  } 
 
   context('The simplest problem in the world') {
     setup { @problem = [[]] }
