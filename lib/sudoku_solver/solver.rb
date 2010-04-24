@@ -16,6 +16,9 @@ module SudokuSolver
     def grid
       Grid.new(@dimension).each { |c|
         v = @problem[c.y][c.x]
+        unless v.nil? || @possibilities.to_a.include?(v)
+          raise InvalidProblemError.new(@problem) 
+        end
         c.content = v ? [v] : @possibilities.to_a
       }
     end
