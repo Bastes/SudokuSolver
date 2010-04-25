@@ -43,15 +43,15 @@ module SudokuSolver
 
     def step(grid)
       grid = self.reduce(grid)
-      unless grid.solved?
-        cell = grid.detect { |c| c.content.length > 1 }
-        cell.content.detect { |value|
-          new_grid = grid.dup
-          new_grid[cell.x, cell.y] = [value]
-          step(new_grid)
-        }
-      end
-      grid
+      return grid if grid.solved?
+      cell = grid.detect { |c| c.content.length > 1 }
+      cell.content.each { |value|
+        new_grid = grid.dup
+        new_grid[cell.x, cell.y] = [value]
+        solution = step(new_grid)
+        return solution if solution.solved?
+      }
+      raise InvalidProblemError.new(@problem)
     end
 
     def reduce(grid)
