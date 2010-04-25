@@ -18,11 +18,11 @@ class TestSolver < Test::Unit::TestCase
     }
   } 
 
-  context('The simplest problem in the world') {
-    setup { @problem = [[nil]] }
-    should('be easy to solve') {
-      solution = SudokuSolver::Solver.solve(@problem)
-      assert_equal [[1]], solution
+  { [[nil]] => [[1]] }.each { |problem, solution|
+    context("The simplest problem in the world #{problem}") {
+      should('be easy to solve') {
+        assert_equal solution, SudokuSolver::Solver.solve(problem)
+      }
     }
   }
 
@@ -38,8 +38,7 @@ class TestSolver < Test::Unit::TestCase
     context('very simple') {
       setup { @problem[0][0] = nil }
       should('still be easy to solve') {
-        solved = SudokuSolver::Solver.solve(@problem)
-        assert_equal @solution, solved
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
       }
     }
     context('simple') {
@@ -48,8 +47,7 @@ class TestSolver < Test::Unit::TestCase
         @problem[2][3] = nil
       }
       should('still be easy to solve') {
-        solved = SudokuSolver::Solver.solve(@problem)
-        assert_equal @solution, solved
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
       }
     }
     context('less simple') {
@@ -60,8 +58,7 @@ class TestSolver < Test::Unit::TestCase
         @problem[3][3] = nil
       }
       should('still be easy to solve') {
-        solved = SudokuSolver::Solver.solve(@problem)
-        assert_equal @solution, solved
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
       }
     }
     context('complex') {
@@ -76,8 +73,37 @@ class TestSolver < Test::Unit::TestCase
         @problem[2][3] = nil
       }
       should('still be easy to solve') {
-        solved = SudokuSolver::Solver.solve(@problem)
-        assert_equal @solution, solved
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
+      }
+    }
+  }
+
+  context("And now it's 3x3 time !") {
+    context("Easy for a start") {
+      setup {
+        @problem =
+          [ [   7, nil, nil,   3, nil, nil, nil,   2, nil ],
+            [   8,   4, nil,   2,   6, nil, nil, nil,   5 ],
+            [ nil,   5,   2, nil,   1,   9, nil,   8,   7 ],
+            [ nil, nil, nil,   9, nil, nil, nil,   3,   2 ],
+            [   4, nil,   1, nil, nil, nil,   7, nil,   6 ],
+            [   9,   2, nil, nil, nil,   6, nil, nil, nil ],
+            [   2,   9, nil,   6,   8, nil,   1,   7, nil ],
+            [   1, nil, nil, nil,   2,   4, nil,   6,   8 ],
+            [ nil,   7, nil, nil, nil,   3, nil, nil,   4 ] ]
+        @solution =
+          [ [   7,   1,   6,   3,   5,   8,   4,   2,   9 ],
+            [   8,   4,   9,   2,   6,   7,   3,   1,   5 ],
+            [   3,   5,   2,   4,   1,   9,   6,   8,   7 ],
+            [   5,   6,   7,   9,   4,   1,   8,   3,   2 ],
+            [   4,   8,   1,   5,   3,   2,   7,   9,   6 ],
+            [   9,   2,   3,   8,   7,   6,   5,   4,   1 ],
+            [   2,   9,   4,   6,   8,   5,   1,   7,   3 ],
+            [   1,   3,   5,   7,   2,   4,   9,   6,   8 ],
+            [   6,   7,   8,   1,   9,   3,   2,   5,   4 ] ]
+      }
+      should("be easy to solve") {
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
       }
     }
   }
