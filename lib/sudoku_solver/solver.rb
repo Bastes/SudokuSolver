@@ -46,10 +46,13 @@ module SudokuSolver
       return grid if grid.solved?
       cell = grid.detect { |c| c.content.length > 1 }
       cell.content.each { |value|
-        new_grid = grid.dup
-        new_grid[cell.x, cell.y] = [value]
-        solution = step(new_grid)
-        return solution if solution.solved?
+        begin
+          new_grid = grid.dup
+          new_grid[cell.x, cell.y] = [value]
+          solution = step(new_grid)
+          return solution if solution.solved?
+        rescue InvalidProblemError
+        end
       }
       raise InvalidProblemError.new(@problem)
     end

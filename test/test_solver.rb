@@ -106,5 +106,32 @@ class TestSolver < Test::Unit::TestCase
         assert_equal @solution, SudokuSolver::Solver.solve(@problem)
       }
     }
+    context("And now a hard one") {
+      setup {
+        @problem =
+          [ [   9, nil, nil,   3, nil, nil, nil, nil,   6 ],
+            [ nil,   8, nil, nil, nil, nil, nil, nil,   7 ],
+            [ nil, nil,   5,   2, nil,   8,   9, nil, nil ],
+            [ nil, nil,   8, nil, nil,   4, nil,   7,   3 ],
+            [ nil,   9, nil, nil, nil, nil, nil,   4, nil ],
+            [   7,   6, nil,   1, nil, nil,   2, nil, nil ],
+            [ nil, nil,   7,   8, nil,   1,   4, nil, nil ],
+            [   1, nil, nil, nil, nil, nil, nil,   5, nil ],
+            [   8, nil, nil, nil, nil,   9, nil, nil,   1 ] ]
+        @solution =
+          [ [   9,   2,   1,   3,   4,   7,   5,   8,   6 ],
+            [   4,   8,   6,   9,   1,   5,   3,   2,   7 ],
+            [   3,   7,   5,   2,   6,   8,   9,   1,   4 ],
+            [   2,   1,   8,   5,   9,   4,   6,   7,   3 ],
+            [   5,   9,   3,   6,   7,   2,   1,   4,   8 ],
+            [   7,   6,   4,   1,   8,   3,   2,   9,   5 ],
+            [   6,   5,   7,   8,   2,   1,   4,   3,   9 ],
+            [   1,   4,   9,   7,   3,   6,   8,   5,   2 ],
+            [   8,   3,   2,   4,   5,   9,   7,   6,   1 ] ]
+      }
+      should("be easy to solve") {
+        assert_equal @solution, SudokuSolver::Solver.solve(@problem)
+      }
+    }
   }
 end
