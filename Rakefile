@@ -5,9 +5,9 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "sudoku_solver"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "michel.belleville@saas4.com"
+    gem.summary = %Q{A pretty simple sudoku solver}
+    gem.description = %Q{A very simple sudoku problems solver}
+    gem.email = "michel.belleville@gmail.com"
     gem.homepage = "http://github.com/Bastes/SudokuSolver"
     gem.authors = ["Michel Belleville"]
     gem.add_dependency "cellular_map", ">= 0.6.0"
